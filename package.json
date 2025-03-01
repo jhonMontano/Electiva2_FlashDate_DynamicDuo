@@ -1,0 +1,26 @@
+{
+  "name": "flashdate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhonMontano/Electiva2_FlashDate_DynamicDuo.git"
+  },
+  "author": "A/N",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhonMontano/Electiva2_FlashDate_DynamicDuo/issues"
+  },
+  "homepage": "https://github.com/jhonMontano/Electiva2_FlashDate_DynamicDuo#readme",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express-validator": "^7.2.1"
+  }
+}
