@@ -1,3 +1,8 @@
+const express = require('express');
+const { getUsers, getUserByEmail, postUsers, updateUser, deleteUser} = require('../controllers/users');
+const {login, register} = require('../controllers/auth');
+
+const {getUserRules, isValid, createUserRules,  loginRules, registerRules,} = require('../middleware/errors')
 const express = require("express");
 const {
   getUsers,
