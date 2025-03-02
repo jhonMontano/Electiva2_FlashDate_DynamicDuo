@@ -19,6 +19,17 @@ const deleteUserRules = [
     query('email').isEmail().escape()
 ];
 
+const loginRules = [
+    body('email').isEmail().withMessage('Email is not valid'),
+    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
+];
+
+const registerRules = [
+    body('email').isEmail().withMessage('Email is not valid'),
+    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
+    body('name').notEmpty().withMessage('Name is required')
+];
+
 const isValid = (req, res, next) => {
     const result = validationResult(req)
     if (!result.isEmpty()) {
@@ -34,4 +45,6 @@ module.exports = {getUserRules,
                  isValid,
                  createUserRules,
                  UpdatedUserRules,
-                 deleteUserRules};
+                 deleteUserRules,
+                 loginRules,
+                 registerRules};

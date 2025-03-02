@@ -1,8 +1,8 @@
 const express = require('express');
 const { getUsers, getUserByEmail, postUsers, updateUser, deleteUser} = require('../controllers/users');
+const {login, register} = require('../controllers/auth');
 
-
-const {getUserRules, isValid, createUserRules} = require('../middleware/errors')
+const {getUserRules, isValid, createUserRules,  loginRules, registerRules,} = require('../middleware/errors')
 
 const router = express.Router();
 
