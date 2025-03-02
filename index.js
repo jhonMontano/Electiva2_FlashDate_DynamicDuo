@@ -3,6 +3,8 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
 const userRoutes = require("./src/routes/users");
 
+const authRoutes = require('./src/routes/auth');
+
 const app = express();
 
 const swaggerOptions = {
@@ -28,6 +30,8 @@ app.get("/Helo", (req, res) => {
 });
 
 app.use("/api", userRoutes);
+
+app.use('/api', authRoutes);
 
 try {
   const PORT = process.env.PORT || 3000;
