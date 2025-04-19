@@ -26,6 +26,7 @@
 ■ Tecnologías utilizadas
   Node.js: Entorno de ejecución de JavaScript
   Express.js: Framework para construir la API REST
+  Swagger: Se utiliza para la documentación, para ingresar a la documentación es /api-docs
 
 ■ Licencia utilizada
   No aplica
