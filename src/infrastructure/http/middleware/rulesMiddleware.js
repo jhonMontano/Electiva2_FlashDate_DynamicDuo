@@ -49,6 +49,10 @@ const getUserById = [
     param("id").isMongoId().withMessage("User not found")
 ];
 
+const getMessagesRules = [
+    param("roomId").notEmpty().withMessage("Room ID is required")
+  ];
+
 module.exports = {getUserRules,
                  isValid,
                  createUserRules,
@@ -57,4 +61,5 @@ module.exports = {getUserRules,
                  loginRules,
                  registerRules,
                  deleteUserByIdRules,
-                 getUserById};
+                 getUserById,
+                 getMessagesRules};
