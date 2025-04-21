@@ -31,7 +31,7 @@ app.use(morgan("dev"));
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/swipes", swipeRoutes);
-app.use("api/messages", messageRoutes);
+app.use("/api/messages", messageRoutes);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get("/", (req, res) => {
