@@ -9,6 +9,7 @@ const swaggerUi = require("swagger-ui-express");
 const userRoutes = require("./src/infrastructure/http/routes/UserRoutes");
 const authRoutes = require("./src/infrastructure/http/routes/AuthRoutes");
 const swipeRoutes = require("./src/infrastructure/http/routes/SwipeRoutes");
+const messageRoutes = require("./src/infrastructure/http/routes/MessageRoutes")
 const swaggerSpec = require("./src/infrastructure/config/swagger");
 
 const connectBD = require("./src/infrastructure/config/db");
@@ -30,6 +31,7 @@ app.use(morgan("dev"));
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/swipes", swipeRoutes);
+app.use("api/messages", messageRoutes);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get("/", (req, res) => {
