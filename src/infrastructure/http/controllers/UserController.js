@@ -5,14 +5,20 @@ class UserController{
         this.userService = userService;
     }
 
-    async register(req, res){
+    async register(req, res) {
         try {
-            const user = await this.userService.registerUser(req.body);
+            const userData = req.body;
+    
+            if (req.file) {
+                userData.profilePhoto = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+            }
+    
+            const user = await this.userService.registerUser(userData);
             res.status(201).json(user);
         } catch (error) {
-            res.status(500).json({error: error.message});
+            res.status(500).json({ error: error.message });
         }
-    }
+    }    
 
     async getAll(req, res){
         try {

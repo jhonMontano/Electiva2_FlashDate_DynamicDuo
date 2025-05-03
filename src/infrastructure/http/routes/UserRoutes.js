@@ -85,13 +85,21 @@ const UserRepository = require("../../persistence/UserRepository");
 const UserService = require("../../../application/services/UserService");
 const {registerRules, isValid, deleteUserByIdRules, getUserById} = require("../middleware/rulesMiddleware");
 
-
 const db = {};
 const userRepository = new UserRepository(db);
 const userService = new UserService(userRepository);
 const userController = new UserController(userService);
 
-router.post("/register", registerRules, isValid, (req, res) => userController.register(req, res));
+const upload = require("../middleware/uploadMiddleware");
+
+router.post(
+  "/register",
+  upload.single("profilePhoto"),
+  registerRules,
+  isValid,
+  (req, res) => userController.register(req, res)
+);
+
 router.get("/", (req, res) => userController.getAll(req, res));
 router.get("/:id", getUserById, (req, res) => userController.getUserById(req, res));
 router.delete("/delete/:id", deleteUserByIdRules, isValid, (req, res) => userController.deleteUser(req, res));
