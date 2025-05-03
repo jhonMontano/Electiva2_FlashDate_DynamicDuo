@@ -24,7 +24,9 @@ const io = new Server(server, {
   }
 });
 
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(cors());
 app.use(morgan("dev"));
 
@@ -33,6 +35,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/swipes", swipeRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/uploads", express.static("uploads"));
 
 app.get("/", (req, res) => {
     res.send("Welcome to API from FlashDate 🚀");
