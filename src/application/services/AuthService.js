@@ -23,9 +23,9 @@ class AuthService{
             {expiresIn: "2h"}
         );
 
-        return{
-            user:{
-                id: userFound._id,
+        return {
+            user: {
+                _id: userFound._id, 
                 name: userFound.name,
                 email: userFound.email,
                 location: userFound.location,
