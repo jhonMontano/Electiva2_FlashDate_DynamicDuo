@@ -8,11 +8,6 @@ class UserController{
     async register(req, res) {
         try {
             const userData = req.body;
-    
-            if (req.file) {
-                userData.profilePhoto = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
-            }
-    
             const user = await this.userService.registerUser(userData);
             res.status(201).json(user);
         } catch (error) {
