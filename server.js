@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
 
   socket.on("SendMessage", ({ roomId, sender, content }) => {
     console.log(`💬 Message from ${sender} in room ${roomId}: ${content}`);
-    io.to(roomId).emit("receiveMessage", { sender, content });
+    io.to(roomId).emit("privateMessage", { roomId, sender, content });
   });
 
   socket.on("register", (userId) => {
