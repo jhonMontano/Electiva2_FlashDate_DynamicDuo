@@ -1,7 +1,8 @@
 class SwipeService {
-    constructor(swipeRepository, matchRepository) {
+    constructor(swipeRepository, matchRepository, io) {
         this.swipeRepository = swipeRepository;
         this.matchRepository = matchRepository;
+        this.io = io;
     }
 
     async handleSwipe(userId, targetUserId, action) {
@@ -11,6 +12,10 @@ class SwipeService {
             const hasMatch = await this.matchRepository.hasUserLikedBack(userId, targetUserId);
             if (hasMatch) {
                 const match = await this.matchRepository.createMatch(userId, targetUserId);
+
+                this.io.to(userId).emit('newMatch', { match });
+                this.io.to(targetUserId).emit('newMatch', { match });
+
                 return { match: true, matchId: match._id };
             }
         }

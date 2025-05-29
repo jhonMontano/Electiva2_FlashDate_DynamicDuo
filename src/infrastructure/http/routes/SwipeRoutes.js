@@ -65,12 +65,15 @@ const SwipeService = require("../../../application/services/SwipeService");
 const SwipeController = require("../controllers/SwipeController");
 const authMiddleware = require("../middleware/authMiddleware");
 
-const swipeRepository = new SwipeRepository();
-const matchRepository = new MatchRepository();
-const swipeService = new SwipeService(swipeRepository, matchRepository);
-const swipeController = new SwipeController(swipeService);
+module.exports = (io) => {
+    const swipeRepository = new SwipeRepository();
+    const matchRepository = new MatchRepository();
+    const swipeService = new SwipeService(swipeRepository, matchRepository, io);
+    const swipeController = new SwipeController(swipeService);
 
-router.post("/", authMiddleware, (req, res) => swipeController.swipe(req, res));
-router.get("/matches/:userId", authMiddleware, (req, res) => swipeController.getMatches(req, res));
+    router.post("/", authMiddleware, (req, res) => swipeController.swipe(req, res));
+    router.get("/matches/:userId", authMiddleware, (req, res) => swipeController.getMatches(req, res));
 
-module.exports = router;
+    return router;
+};
+
