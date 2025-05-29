@@ -92,7 +92,7 @@ const userController = new UserController(userService);
 
 const upload = require("../middleware/uploadMiddleware");
 
-router.post("/register", registerRules, isValid, (req, res) => userController.register(req, res));
+router.post("/register", (req, res) => userController.register(req, res));
 router.get("/", (req, res) => userController.getAll(req, res));
 router.get("/:id", getUserById, (req, res) => userController.getUserById(req, res));
 router.delete("/delete/:id", deleteUserByIdRules, isValid, (req, res) => userController.deleteUser(req, res));
