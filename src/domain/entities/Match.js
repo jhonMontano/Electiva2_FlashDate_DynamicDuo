@@ -1,5 +1,5 @@
-class Match{
-    constructor({users}){
+class Match {
+    constructor({ users }) {
         this.users = users;
     }
 }
