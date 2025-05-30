@@ -1,7 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const http = require("http");
-const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 const swaggerUi = require("swagger-ui-express");
@@ -11,6 +10,9 @@ const authRoutes = require("./src/infrastructure/http/routes/AuthRoutes");
 const messageRoutes = require("./src/infrastructure/http/routes/MessageRoutes");
 const swaggerSpec = require("./src/infrastructure/config/swagger");
 const connectBD = require("./src/infrastructure/config/db");
+
+const MessageRepository = require("./src/infrastructure/persistence/MessageRepository");
+const MessageService = require("./src/application/services/MessageService");
 
 connectBD();
 
@@ -44,6 +46,9 @@ app.get("/", (req, res) => {
   res.send("Welcome to API from FlashDate 🚀");
 });
 
+const messageRepository = new MessageRepository();
+const messageService = new MessageService(messageRepository);
+
 io.on("connection", (socket) => {
   console.log("New user connected", socket.id);
 
@@ -52,9 +57,13 @@ io.on("connection", (socket) => {
     console.log(`📥 User ${socket.id} joined room ${roomId}`);
   });
 
-  socket.on("SendMessage", ({ roomId, sender, content }) => {
-    console.log(`💬 Message from ${sender} in room ${roomId}: ${content}`);
-    io.to(roomId).emit("privateMessage", { roomId, sender, content });
+  socket.on('privateMessage', (messageData) => {
+    socket.to(messageData.roomId).emit('privateMessage', messageData);
+  });
+
+  socket.on('userOnline', ({ userId }) => {
+    socket.userId = userId;
+    console.log(`Usuario ${userId} está online`);
   });
 
   socket.on("register", (userId) => {
