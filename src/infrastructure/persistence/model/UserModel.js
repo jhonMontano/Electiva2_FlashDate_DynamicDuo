@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema({
         state: { type: String, required: true },
         city: { type: String, required: true },
     },
+    description: { type: String, required: true },
     profilePhoto: [{ type: String, required: true }],
 }, { timestamps: true });
 
