@@ -4,6 +4,7 @@ describe("SwipeService", () => {
   const mockSwipeRepo = {
     saveSwipe: jest.fn(),
   };
+  
 
   const mockMatchRepo = {
     hasUserLikedBack: jest.fn(() => true),
