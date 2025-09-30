@@ -1,0 +1,44 @@
+services:
+  mongo:
+    image: mongo:6
+    container_name: flashdate_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build:
+      context: ./Electiva2_FlashDate_DynamicDuo
+      dockerfile: Dockerfile 
+    container_name: flashdate_backend
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - MONGO_URI=${MONGO_URI}
+      - JWT_SECRET=${JWT_SECRET}
+    volumes:
+      - ./Electiva2_FlashDate_DynamicDuo:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./Electiva2_FlashDateFront_DynamicDuo
+      dockerfile: Dockerfile
+    container_name: flashdate_mobile
+    ports:
+      - "8081:8081"
+    environment:
+      - EXPO_DEVTOOLS_LISTEN_ADDRESS=0.0.0.0
+    volumes:
+      - ./Electiva2_FlashDateFront_DynamicDuo:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
