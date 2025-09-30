@@ -7,7 +7,6 @@ describe("MessageService", () => {
     };
 
     const messageService = new MessageService(mockMessageRepo);
-//comentario
     it("It should save a message", async () => {
         const msg = await messageService.sendMessage({
             roomId: "match_123",
