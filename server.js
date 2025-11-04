@@ -42,7 +42,7 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/uploads", express.static("uploads"));
 
-app.get("/", (req, res) => {
+app.get("/health", (req, res) => {
   res.send("Welcome to API from FlashDate 🚀");
 });
 
@@ -77,6 +77,6 @@ io.on("connection", (socket) => {
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`🚀 Server + Socket.IO running on: http://localhost:${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Server + Socket.IO running on: http://0.0.0.0:${PORT}`);
 });
