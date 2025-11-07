@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "node --watch server.js",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "jest": {
     "testEnvironment": "node"
@@ -24,6 +24,7 @@
   "homepage": "https://github.com/jhonMontano/Electiva2_FlashDate_DynamicDuo#readme",
   "description": "",
   "dependencies": {
+    "@aws-sdk/client-lambda": "^3.926.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
     "body-parser": "^1.20.3",

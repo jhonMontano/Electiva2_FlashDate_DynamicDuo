@@ -7,7 +7,6 @@ describe("MessageService", () => {
     };
 
     const messageService = new MessageService(mockMessageRepo);
-
     it("It should save a message", async () => {
         const msg = await messageService.sendMessage({
             roomId: "match_123",
@@ -21,6 +20,7 @@ describe("MessageService", () => {
         expect(msg.content).toBe("Hello")
     });
 
+    
     it("It should return messages for roomId", async () => {
         const result = await messageService.getMessages("match_123");
         expect(result[0].roomId).toBe("match_123");
