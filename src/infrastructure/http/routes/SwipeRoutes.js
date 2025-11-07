@@ -61,6 +61,7 @@ const router = express.Router();
 
 const SwipeRepository = require("../../persistence/SwipeRepository");
 const MatchRepository = require("../../persistence/MatchRepository");
+const UserRepository = require("../../persistence/UserRepository");
 const SwipeService = require("../../../application/services/SwipeService");
 const SwipeController = require("../controllers/SwipeController");
 const authMiddleware = require("../middleware/authMiddleware");
@@ -68,7 +69,8 @@ const authMiddleware = require("../middleware/authMiddleware");
 module.exports = (io) => {
     const swipeRepository = new SwipeRepository();
     const matchRepository = new MatchRepository();
-    const swipeService = new SwipeService(swipeRepository, matchRepository, io);
+    const userRepository = new UserRepository();
+    const swipeService = new SwipeService(swipeRepository, matchRepository, io, userRepository);
     const swipeController = new SwipeController(swipeService);
 
     router.post("/", authMiddleware, (req, res) => swipeController.swipe(req, res));
