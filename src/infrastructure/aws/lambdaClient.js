@@ -1,6 +1,6 @@
 import { LambdaClient, InvokeCommand } from "@aws-sdk/client-lambda";
 
-const lambdaClient = new LambdaClient({ region: "us-east-2" }); 
+const lambdaClient = new LambdaClient({ region: "us-east-1" }); 
 
 export const invokeSendEmailLambda = async ({ username, body, targetEmail }) => {
   try {
