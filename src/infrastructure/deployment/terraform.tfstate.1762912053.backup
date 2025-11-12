@@ -1,7 +1,7 @@
 {
   "version": 4,
   "terraform_version": "1.13.5",
-  "serial": 30,
+  "serial": 17,
   "lineage": "dfd80afd-1fe9-d85b-91bd-11969fe25c0f",
   "outputs": {
     "ecr_repository_url": {
@@ -10,44 +10,6 @@
     }
   },
   "resources": [
-    {
-      "module": "module.api_gateway",
-      "mode": "managed",
-      "type": "aws_apigatewayv2_api",
-      "name": "electiva3_api",
-      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
-      "instances": [
-        {
-          "schema_version": 0,
-          "attributes": {
-            "api_endpoint": "https://hdtb2ue909.execute-api.us-east-2.amazonaws.com",
-            "api_key_selection_expression": "$request.header.x-api-key",
-            "arn": "arn:aws:apigateway:us-east-2::/apis/hdtb2ue909",
-            "body": null,
-            "cors_configuration": [],
-            "credentials_arn": null,
-            "description": "",
-            "disable_execute_api_endpoint": false,
-            "execution_arn": "arn:aws:execute-api:us-east-2:502456973871:hdtb2ue909",
-            "fail_on_warnings": null,
-            "id": "hdtb2ue909",
-            "ip_address_type": "ipv4",
-            "name": "electiva3-api",
-            "protocol_type": "HTTP",
-            "region": "us-east-2",
-            "route_key": null,
-            "route_selection_expression": "$request.method $request.path",
-            "tags": {},
-            "tags_all": {},
-            "target": null,
-            "version": ""
-          },
-          "sensitive_attributes": [],
-          "identity_schema_version": 0,
-          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjAifQ=="
-        }
-      ]
-    },
     {
       "module": "module.ecr",
       "mode": "managed",
@@ -112,7 +74,18 @@
           "schema_version": 0,
           "attributes": {
             "arn": "arn:aws:ecs:us-east-2:502456973871:cluster/electiva3",
-            "configuration": [],
+            "configuration": [
+              {
+                "execute_command_configuration": [
+                  {
+                    "kms_key_id": "",
+                    "log_configuration": [],
+                    "logging": "DEFAULT"
+                  }
+                ],
+                "managed_storage_configuration": []
+              }
+            ],
             "id": "arn:aws:ecs:us-east-2:502456973871:cluster/electiva3",
             "name": "electiva3",
             "region": "us-east-2",
@@ -123,20 +96,109 @@
                 "value": "disabled"
               }
             ],
-            "tags": {
-              "Environment": "dev",
-              "Name": "electiva3",
-              "Project": "tinder-app"
-            },
-            "tags_all": {
-              "Environment": "dev",
-              "Name": "electiva3",
-              "Project": "tinder-app"
-            }
+            "tags": {},
+            "tags_all": {}
           },
           "sensitive_attributes": [],
           "identity_schema_version": 0,
-          "private": "bnVsbA=="
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjAifQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.ecs",
+      "mode": "managed",
+      "type": "aws_ecs_service",
+      "name": "electiva3_service",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "alarms": [],
+            "arn": "arn:aws:ecs:us-east-2:502456973871:service/electiva3/electiva3-task-service-4jom8qzv",
+            "availability_zone_rebalancing": "ENABLED",
+            "capacity_provider_strategy": [
+              {
+                "base": 0,
+                "capacity_provider": "FARGATE",
+                "weight": 1
+              }
+            ],
+            "cluster": "arn:aws:ecs:us-east-2:502456973871:cluster/electiva3",
+            "deployment_circuit_breaker": [
+              {
+                "enable": true,
+                "rollback": true
+              }
+            ],
+            "deployment_configuration": [
+              {
+                "bake_time_in_minutes": "0",
+                "lifecycle_hook": [],
+                "strategy": "ROLLING"
+              }
+            ],
+            "deployment_controller": [
+              {
+                "type": "ECS"
+              }
+            ],
+            "deployment_maximum_percent": 200,
+            "deployment_minimum_healthy_percent": 100,
+            "desired_count": 1,
+            "enable_ecs_managed_tags": true,
+            "enable_execute_command": false,
+            "force_delete": null,
+            "force_new_deployment": null,
+            "health_check_grace_period_seconds": 0,
+            "iam_role": "/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+            "id": "arn:aws:ecs:us-east-2:502456973871:service/electiva3/electiva3-task-service-4jom8qzv",
+            "launch_type": "",
+            "load_balancer": [
+              {
+                "advanced_configuration": [],
+                "container_name": "electiva3-container",
+                "container_port": 3000,
+                "elb_name": "",
+                "target_group_arn": "arn:aws:elasticloadbalancing:us-east-2:502456973871:targetgroup/electiva3-tg2/05b59975687d1018"
+              }
+            ],
+            "name": "electiva3-task-service-4jom8qzv",
+            "network_configuration": [
+              {
+                "assign_public_ip": true,
+                "security_groups": [
+                  "sg-0de5e1aeaf841eebf"
+                ],
+                "subnets": [
+                  "subnet-03dcf35b4f0d5a446",
+                  "subnet-0492deecb7bf9c906",
+                  "subnet-0fde28d4661895bf3"
+                ]
+              }
+            ],
+            "ordered_placement_strategy": [],
+            "placement_constraints": [],
+            "platform_version": "LATEST",
+            "propagate_tags": "NONE",
+            "region": "us-east-2",
+            "scheduling_strategy": "REPLICA",
+            "service_connect_configuration": [],
+            "service_registries": [],
+            "sigint_rollback": null,
+            "tags": {},
+            "tags_all": {},
+            "task_definition": "electiva3-task:7",
+            "timeouts": null,
+            "triggers": {},
+            "volume_configuration": [],
+            "vpc_lattice_configurations": [],
+            "wait_for_steady_state": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9"
         }
       ]
     },
@@ -150,9 +212,9 @@
         {
           "schema_version": 1,
           "attributes": {
-            "arn": "arn:aws:ecs:us-east-2:502456973871:task-definition/electiva3-task:8",
+            "arn": "arn:aws:ecs:us-east-2:502456973871:task-definition/electiva3-task:7",
             "arn_without_revision": "arn:aws:ecs:us-east-2:502456973871:task-definition/electiva3-task",
-            "container_definitions": "[{\"environment\":[],\"essential\":true,\"image\":\"502456973871.dkr.ecr.us-east-2.amazonaws.com/electiva3:latest\",\"logConfiguration\":{\"logDriver\":\"awslogs\",\"options\":{\"awslogs-stream-prefix\":\"ecs\",\"awslogs-group\":\"/ecs/electiva3-task\",\"awslogs-region\":\"us-east-2\"}},\"mountPoints\":[],\"name\":\"electiva3-container\",\"portMappings\":[{\"containerPort\":3000,\"hostPort\":3000,\"protocol\":\"tcp\"}],\"secrets\":[{\"name\":\"JWT_SECRET\",\"valueFrom\":\"arn:aws:ssm:us-east-2:502456973871:parameter/tinder-app/dev/jwtsecret\"},{\"name\":\"MONGO_URI\",\"valueFrom\":\"arn:aws:ssm:us-east-2:502456973871:parameter/tinder-app/dev/mogourl\"},{\"name\":\"PORT\",\"valueFrom\":\"arn:aws:ssm:us-east-2:502456973871:parameter/tinder-app/dev/port\"}],\"systemControls\":[],\"volumesFrom\":[]}]",
+            "container_definitions": "[{\"environment\":[],\"environmentFiles\":[],\"essential\":true,\"image\":\"502456973871.dkr.ecr.us-east-2.amazonaws.com/electiva3@sha256:5ff8bf812667f5a059e98912b81d77777603daf14b836622f5f072a5bb387a2f\",\"logConfiguration\":{\"logDriver\":\"awslogs\",\"options\":{\"awslogs-group\":\"/ecs/electiva3-task\",\"awslogs-create-group\":\"true\",\"awslogs-region\":\"us-east-2\",\"awslogs-stream-prefix\":\"ecs\"},\"secretOptions\":[]},\"mountPoints\":[],\"name\":\"electiva3-container\",\"portMappings\":[{\"appProtocol\":\"http\",\"containerPort\":3000,\"hostPort\":3000,\"name\":\"electiva3-container-3000-tcp\",\"protocol\":\"tcp\"}],\"secrets\":[{\"name\":\"JWT_SECRET\",\"valueFrom\":\"arn:aws:ssm:us-east-2:502456973871:parameter/electiva/prod/jwtsecret\"},{\"name\":\"MONGO_URI\",\"valueFrom\":\"arn:aws:ssm:us-east-2:502456973871:parameter/electiva/prod/mogourl\"},{\"name\":\"PORT\",\"valueFrom\":\"arn:aws:ssm:us-east-2:502456973871:parameter/electiva/prod/port\"}],\"systemControls\":[],\"ulimits\":[],\"volumesFrom\":[]}]",
             "cpu": "512",
             "enable_fault_injection": false,
             "ephemeral_storage": [],
@@ -169,15 +231,15 @@
             "requires_compatibilities": [
               "FARGATE"
             ],
-            "revision": 8,
+            "revision": 7,
             "runtime_platform": [
               {
                 "cpu_architecture": "X86_64",
                 "operating_system_family": "LINUX"
               }
             ],
-            "skip_destroy": false,
-            "tags": null,
+            "skip_destroy": null,
+            "tags": {},
             "tags_all": {},
             "task_role_arn": "arn:aws:iam::502456973871:role/ecsTaskExecutionRole",
             "track_latest": false,
@@ -185,11 +247,7 @@
           },
           "sensitive_attributes": [],
           "identity_schema_version": 0,
-          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
-          "dependencies": [
-            "module.iam.aws_iam_role.ecs_task_execution_role",
-            "module.iam.data.aws_iam_policy_document.ecs_assume_role"
-          ]
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ=="
         }
       ]
     },
@@ -434,7 +492,7 @@
             "arn": "arn:aws:iam::502456973871:role/ecsTaskExecutionRole",
             "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
             "create_date": "2025-09-28T19:32:56Z",
-            "description": "",
+            "description": "Allows ECS tasks to call AWS services on your behalf.",
             "force_detach_policies": false,
             "id": "ecsTaskExecutionRole",
             "inline_policy": [
@@ -456,16 +514,8 @@
             "name_prefix": "",
             "path": "/",
             "permissions_boundary": "",
-            "tags": {
-              "Environment": "dev",
-              "Name": "ecsTaskExecutionRole",
-              "Project": "tinder-app"
-            },
-            "tags_all": {
-              "Environment": "dev",
-              "Name": "ecsTaskExecutionRole",
-              "Project": "tinder-app"
-            },
+            "tags": {},
+            "tags_all": {},
             "unique_id": "AROAXJ7GE7IX7V3SLRRK2"
           },
           "sensitive_attributes": [],
@@ -474,10 +524,7 @@
             "account_id": "502456973871",
             "name": "ecsTaskExecutionRole"
           },
-          "private": "bnVsbA==",
-          "dependencies": [
-            "module.iam.data.aws_iam_policy_document.ecs_assume_role"
-          ]
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjAifQ=="
         }
       ]
     },
@@ -802,18 +849,26 @@
           "schema_version": 0,
           "attributes": {
             "allowed_pattern": "",
-            "arn": "arn:aws:ssm:us-east-2:502456973871:parameter/electiva/prod/mogourl",
+            "arn": "arn:aws:ssm:us-east-1:502456973871:parameter/electiva/prod/mogourl",
             "data_type": "text",
-            "description": "",
+            "description": "MongoDB URI for electiva3 app",
             "has_value_wo": false,
             "id": "/electiva/prod/mogourl",
             "insecure_value": null,
             "key_id": "alias/aws/ssm",
             "name": "/electiva/prod/mogourl",
             "overwrite": null,
-            "region": "us-east-2",
-            "tags": {},
-            "tags_all": {},
+            "region": "us-east-1",
+            "tags": {
+              "Environment": "dev",
+              "Name": "mogourl",
+              "Project": "tinder-app"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "Name": "mogourl",
+              "Project": "tinder-app"
+            },
             "tier": "Standard",
             "type": "SecureString",
             "value": "mongodb+srv://todo_api_user:admin1234567@cluster0.a0r2x.mongodb.net/?retryWrites=true\u0026w=majority\u0026appName=Cluster0",
@@ -839,9 +894,9 @@
           "identity": {
             "account_id": "502456973871",
             "name": "/electiva/prod/mogourl",
-            "region": "us-east-2"
+            "region": "us-east-1"
           },
-          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjAifQ=="
+          "private": "bnVsbA=="
         }
       ]
     },
@@ -856,20 +911,28 @@
           "schema_version": 0,
           "attributes": {
             "allowed_pattern": "",
-            "arn": "arn:aws:ssm:us-east-2:502456973871:parameter/electiva/prod/port",
+            "arn": "arn:aws:ssm:us-east-1:502456973871:parameter/electiva/prod/port",
             "data_type": "text",
-            "description": "",
+            "description": "Port for electiva3 app",
             "has_value_wo": false,
             "id": "/electiva/prod/port",
             "insecure_value": null,
-            "key_id": "",
+            "key_id": "alias/aws/ssm",
             "name": "/electiva/prod/port",
             "overwrite": null,
-            "region": "us-east-2",
-            "tags": {},
-            "tags_all": {},
+            "region": "us-east-1",
+            "tags": {
+              "Environment": "dev",
+              "Name": "port",
+              "Project": "tinder-app"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "Name": "port",
+              "Project": "tinder-app"
+            },
             "tier": "Standard",
-            "type": "String",
+            "type": "SecureString",
             "value": "3000",
             "value_wo": null,
             "value_wo_version": null,
@@ -893,9 +956,9 @@
           "identity": {
             "account_id": "502456973871",
             "name": "/electiva/prod/port",
-            "region": "us-east-2"
+            "region": "us-east-1"
           },
-          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjAifQ=="
+          "private": "bnVsbA=="
         }
       ]
     },
@@ -928,7 +991,7 @@
             ],
             "id": "arn:aws:elasticloadbalancing:us-east-2:502456973871:targetgroup/electiva3-tg2/05b59975687d1018",
             "ip_address_type": "ipv4",
-            "lambda_multi_value_headers_enabled": false,
+            "lambda_multi_value_headers_enabled": null,
             "load_balancer_arns": [
               "arn:aws:elasticloadbalancing:us-east-2:502456973871:loadbalancer/app/electiva3-lb/e666a09a4a74e2c4"
             ],
@@ -941,7 +1004,7 @@
             "preserve_client_ip": null,
             "protocol": "HTTP",
             "protocol_version": "HTTP1",
-            "proxy_protocol_v2": false,
+            "proxy_protocol_v2": null,
             "region": "us-east-2",
             "slow_start": 0,
             "stickiness": [
@@ -952,16 +1015,8 @@
                 "type": "lb_cookie"
               }
             ],
-            "tags": {
-              "Environment": "dev",
-              "Name": "electiva3-tg2",
-              "Project": "tinder-app"
-            },
-            "tags_all": {
-              "Environment": "dev",
-              "Name": "electiva3-tg2",
-              "Project": "tinder-app"
-            },
+            "tags": {},
+            "tags_all": {},
             "target_failover": [
               {
                 "on_deregistration": null,
@@ -998,7 +1053,7 @@
           "identity": {
             "arn": "arn:aws:elasticloadbalancing:us-east-2:502456973871:targetgroup/electiva3-tg2/05b59975687d1018"
           },
-          "private": "bnVsbA=="
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjAifQ=="
         }
       ]
     }

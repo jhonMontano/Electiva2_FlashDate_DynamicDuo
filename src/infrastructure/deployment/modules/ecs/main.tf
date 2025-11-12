@@ -63,8 +63,12 @@ resource "aws_ecs_service" "electiva3_service" {
   name            = var.service_name
   cluster         = aws_ecs_cluster.electiva3.id
   task_definition = aws_ecs_task_definition.electiva3_task.arn
-  launch_type     = "FARGATE"
   desired_count   = 1
+
+  capacity_provider_strategy {
+    capacity_provider = "FARGATE"
+    weight            = 1
+  }
 
   network_configuration {
     subnets         = var.subnet_ids
